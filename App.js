@@ -1,21 +1,23 @@
 import React, {useState} from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView } from 'react-native';
-import Task from './components/Task';
+import Task from './components/Task'; //importing Task component in the App.js, which is the entry point for the app
 
 export default function App() {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
 
+  //this function handles the logic for adding a new task item to the list of task items.
   const handleAddTask = () => {
-    Keyboard.dismiss();
-    setTaskItems([...taskItems, task])
-    setTask(null);
+    Keyboard.dismiss(); // Dismisses the keyboard (if it is currently open) to improve the user experience.
+    setTaskItems([...taskItems, task]) //Adds the task value to the end of the taskItems array and updates the state with the new array.
+    setTask(null);  //Resets the task state to null, clearing the input field.
   }
 
+  // takes an index as an argument and removes the task item with that index from the taskItems array
   const completeTask = (index) => {
-    let itemsCopy = [...taskItems];
-    itemsCopy.splice(index, 1);
-    setTaskItems(itemsCopy)
+    let itemsCopy = [...taskItems]; //it creates a copy of the taskItems array using the spread operator ..., which is used to create a new array with the same items as the original array.
+    itemsCopy.splice(index, 1); // it uses the splice method to remove the item at the given index from the itemsCopy array
+    setTaskItems(itemsCopy) //it updates the taskItems state with the modified copy of the array, effectively removing the item from the list of tasks displayed in the app.
   }
 
   return (
@@ -53,10 +55,10 @@ export default function App() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeTaskWrapper}
       >
-        <TextInput style={styles.input} placeholder={'Write a task'} value={task} onChangeText={text => setTask(text)} />
+        <TextInput style={styles.input} placeholder={'Write a task'} placeholderTextColor="black" value={task} onChangeText={text => setTask(text)} />
         <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
-            <Text style={styles.addText}>+</Text>
+            <Text style={styles.addText} placeholder = "Add">+</Text>
           </View>
         </TouchableOpacity>
       </KeyboardAvoidingView>
@@ -68,7 +70,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8EAED',
+    backgroundColor: '#FFFACD',
   },
   tasksWrapper: {
     paddingTop: 80,
@@ -92,21 +94,22 @@ const styles = StyleSheet.create({
   input: {
     paddingVertical: 15,
     paddingHorizontal: 15,
-    backgroundColor: '#FFF',
+    backgroundColor: 'floralwhite',
     borderRadius: 60,
     borderColor: '#C0C0C0',
     borderWidth: 1,
     width: 250,
+    color: "black"
   },
   addWrapper: {
     width: 60,
     height: 60,
-    backgroundColor: '#FFF',
+    backgroundColor: 'floralwhite',
     borderRadius: 60,
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: '#C0C0C0',
     borderWidth: 1,
   },
-  addText: {},
+  addText: {color: "black"},
 });
